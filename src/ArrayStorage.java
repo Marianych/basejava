@@ -18,7 +18,7 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        int id = 0;
+        int id = -1;
         for (int i = 0; i < storage.length; i++) {
 
             if ((storage[i] != null) && (storage[i].uuid.equals(uuid))) {
@@ -27,6 +27,10 @@ public class ArrayStorage {
 
             }
         }
+        if (id==-1){
+            System.out.println("Такого элемента нет, держи первый:");
+            id=0;}
+
         return storage[id];
     }
 
