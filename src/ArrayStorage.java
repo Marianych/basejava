@@ -19,19 +19,17 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         int id = -1;
+        Resume buf = null;
         for (int i = 0; i < storage.length; i++) {
-
             if ((storage[i] != null) && (storage[i].uuid.equals(uuid))) {
                 id = i;
                 break;
-
             }
         }
-        if (id==-1){
-            System.out.println("Такого элемента нет, держи первый:");
-            id=0;}
-
-        return storage[id];
+        if (id >= 0) {
+            buf = storage[id];
+        }
+        return buf;
     }
 
     void delete(String uuid) {
@@ -39,7 +37,6 @@ public class ArrayStorage {
             if ((storage[i] != null) && (storage[i].uuid.equals(uuid)))
                 storage[i] = null;
         }
-
     }
 
     /**
@@ -57,10 +54,8 @@ public class ArrayStorage {
         return newStorage;
     }
 
-
     int size() {
         int s = 0;
-
         for (Resume e : storage) {
             if (e != null) {
                 s++;
