@@ -16,35 +16,29 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        for (int i = 0; i <= size; i++) {
-            if (i == size) {
-                storage[i] = r;
-                size++;
-                break;
-            } else if (storage[i].uuid.equals(r.uuid)) {
-                System.out.println("Такое резюме уже есть.");
-                break;
-
-            }
+        int id = indexOf(r.uuid);
+        if (!isInArray(id)) {
+            storage[size] = r;
+            size++;
         }
-
     }
 
     Resume get(String uuid) {
         int id = indexOf(uuid);
-        if (id >= 0)
+        if (isInArray(id))
             return storage[id];
-        else
-            return null;
+        return null;
     }
 
     void delete(String uuid) {
-        int i = indexOf(uuid);
-        if (i >= 0) {
-            arraycopy(storage, i + 1, storage, i, size - i - 1);
+        int id = indexOf(uuid);
+        int headSize = id + 1;
+        if (isInArray(id)) {
+            arraycopy(storage, headSize, storage, id, size - headSize);
             size--;
-        } else
+        } else {
             System.out.println("Нет такого резюме.");
+        }
     }
 
     /**
@@ -61,14 +55,17 @@ public class ArrayStorage {
     }
 
     private int indexOf(String uuid) {
-        int index = -1;
+        int nonExistIndex = -1;
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                index = i;
-                break;
+                return i;
             }
         }
-        return index;
+        return nonExistIndex;
 
+    }
+
+    private boolean isInArray(int id) {
+        return id >= 0;
     }
 }
