@@ -7,34 +7,44 @@ import static java.lang.System.arraycopy;
 
 public class ArrayStorage {
     private Resume[] storage = new Resume[10000];
-    private int s = 0;
+    private int size = 0;
 
     void clear() {
-        for (int i = 0; i < s; i++)
+        for (int i = 0; i < size; i++)
             storage[i] = null;
-        s = 0;
+        size = 0;
     }
 
     void save(Resume r) {
-        s++;
-        for (int i = 0; i < s; i++)
-            if (storage[i] == null) storage[i] = r;
+        for (int i = 0; i <= size; i++) {
+            if (i == size) {
+                storage[i] = r;
+                size++;
+                break;
+            } else if (storage[i].uuid.equals(r.uuid)) {
+                System.out.println("Такое резюме уже есть.");
+                break;
+
+            }
+        }
+
     }
 
     Resume get(String uuid) {
-        Resume found = null;
         int id = indexOf(uuid);
-        if (id >= 0) found = storage[id];
-        return found;
+        if (id >= 0)
+            return storage[id];
+        else
+            return null;
     }
 
     void delete(String uuid) {
         int i = indexOf(uuid);
         if (i >= 0) {
-            arraycopy(storage, i + 1, storage, i, s - i - 1);
-            s--;
+            arraycopy(storage, i + 1, storage, i, size - i - 1);
+            size--;
         } else
-            System.out.println("Нельзя удалить то, чего нет");
+            System.out.println("Нет такого резюме.");
     }
 
     /**
@@ -42,17 +52,17 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
         Resume[] newStorage = new Resume[this.size()];
-        arraycopy(storage, 0, newStorage, 0, s);
+        arraycopy(storage, 0, newStorage, 0, size);
         return newStorage;
     }
 
     int size() {
-        return s;
+        return size;
     }
 
     private int indexOf(String uuid) {
         int index = -1;
-        for (int i = 0; i < s; i++) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 index = i;
                 break;
