@@ -56,6 +56,14 @@ public class ArrayStorage {
         return size;
     }
 
+    public void update(String uuid,String newUuid){
+        int id = indexOf(uuid);
+        if (isInArray(id)){
+            storage[id].setUuid(newUuid);
+        }
+
+    }
+
     private int indexOf(String uuid) {
         int nonExistIndex = -1;
         for (int i = 0; i < size; i++) {
