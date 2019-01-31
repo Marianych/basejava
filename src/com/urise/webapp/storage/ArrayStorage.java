@@ -18,11 +18,14 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        int id = indexOf(r.getUuid());
-        if (!isInArray(id)) {
-            storage[size] = r;
-            size++;
-        }
+        if (size <= 10000) {
+            int id = indexOf(r.getUuid());
+            if (!isInArray(id)) {
+                storage[size] = r;
+                size++;
+            }
+
+        } else System.out.println("База переполнена.");
     }
 
     public Resume get(String uuid) {
@@ -56,10 +59,10 @@ public class ArrayStorage {
         return size;
     }
 
-    public void update(String uuid,String newUuid){
+    public void update(String uuid, Resume updateResume) {
         int id = indexOf(uuid);
-        if (isInArray(id)){
-            storage[id].setUuid(newUuid);
+        if (isInArray(id)) {
+            storage[id].setUuid(updateResume.getUuid());
         }
 
     }
