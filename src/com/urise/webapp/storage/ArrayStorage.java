@@ -18,7 +18,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size <= 10000) {
+        if (size <= storage.length) {
             int id = indexOf(r.getUuid());
             if (!isInArray(id)) {
                 storage[size] = r;
