@@ -25,7 +25,7 @@ public class ArrayStorage {
                 size++;
             }
 
-        } else System.out.println("База переполнена.");
+        } else System.out.println("Storage overflow");
     }
 
     public Resume get(String uuid) {
@@ -42,7 +42,7 @@ public class ArrayStorage {
             arraycopy(storage, headSize, storage, id, size - headSize);
             size--;
         } else {
-            System.out.println("Нет такого резюме.");
+            System.out.println("Resume "+uuid+" not found");
         }
     }
 
@@ -59,11 +59,12 @@ public class ArrayStorage {
         return size;
     }
 
-    public void update(String uuid, Resume updateResume) {
+    public void update(Resume updateResume) {
+        String uuid = updateResume.getUuid();
         int id = indexOf(uuid);
         if (isInArray(id)) {
-            storage[id].setUuid(updateResume.getUuid());
-        }
+            storage[id].setUuid(uuid);
+        } else System.out.println("Resume "+uuid+" not found");
 
     }
 
