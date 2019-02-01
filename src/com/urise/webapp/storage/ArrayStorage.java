@@ -5,6 +5,8 @@ package com.urise.webapp.storage;/*
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+
 import static java.lang.System.arraycopy;
 
 public class ArrayStorage {
@@ -12,8 +14,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        for (int i = 0; i < size; i++)
-            storage[i] = null;
+        Arrays.fill(storage,0,size,null);
         size = 0;
     }
 
@@ -50,9 +51,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] newStorage = new Resume[this.size()];
-        arraycopy(storage, 0, newStorage, 0, size);
-        return newStorage;
+        return Arrays.copyOfRange(storage,0,size);
     }
 
     public int size() {
