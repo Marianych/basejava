@@ -10,7 +10,8 @@ import java.util.Arrays;
 import static java.lang.System.arraycopy;
 
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -19,7 +20,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size <= storage.length) {
+        if (size <= STORAGE_LIMIT) {
             int id = indexOf(r.getUuid());
             if (!isInArray(id)) {
                 storage[size] = r;
