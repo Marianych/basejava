@@ -9,10 +9,7 @@ import java.util.Arrays;
 
 import static java.lang.System.arraycopy;
 
-public class ArrayStorage implements Storage {
-    private static final int STORAGE_LIMIT = 10000;
-    private Resume[] storage = new Resume[STORAGE_LIMIT];
-    private int size = 0;
+public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void clear() {
@@ -60,10 +57,7 @@ public class ArrayStorage implements Storage {
         return Arrays.copyOfRange(storage,0,size);
     }
 
-    @Override
-    public int size() {
-        return size;
-    }
+
 
     @Override
     public void update(Resume updateResume) {
