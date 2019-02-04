@@ -29,15 +29,8 @@ public class ArrayStorage extends AbstractArrayStorage {
         } else System.out.println("Storage overflow");
     }
 
-    @Override
-    public Resume get(String uuid) {
-        int id = indexOf(uuid);
-        if (isInArray(id))
-            return storage[id];
-        return null;
-    }
 
-    @Override
+
     public void delete(String uuid) {
         int id = indexOf(uuid);
         int headSize = id + 1;
@@ -69,7 +62,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     }
 
-    private int indexOf(String uuid) {
+    protected int indexOf(String uuid) {
         int nonExistIndex = -1;
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
@@ -80,7 +73,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     }
 
-    private boolean isInArray(int id) {
+    protected boolean isInArray(int id) {
         return id >= 0;
     }
 }
