@@ -1,66 +1,10 @@
-package com.urise.webapp.storage;/*
-  Array based storage for Resumes
- */
-
+package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
-import java.util.Arrays;
-
-import static java.lang.System.arraycopy;
-
+/**
+  Array based storage for Resumes
+ **/
 public class ArrayStorage extends AbstractArrayStorage {
-
-    @Override
-    public void clear() {
-        Arrays.fill(storage,0,size,null);
-        size = 0;
-    }
-
-    @Override
-    public void save(Resume r) {
-        if (size <= STORAGE_LIMIT) {
-            int id = indexOf(r.getUuid());
-            if (!isInArray(id)) {
-                storage[size] = r;
-                size++;
-            }
-
-        } else System.out.println("Storage overflow");
-    }
-
-
-
-    public void delete(String uuid) {
-        int id = indexOf(uuid);
-        int headSize = id + 1;
-        if (isInArray(id)) {
-            arraycopy(storage, headSize, storage, id, size - headSize);
-            size--;
-        } else {
-            System.out.println("Resume "+uuid+" not found");
-        }
-    }
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    @Override
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage,0,size);
-    }
-
-
-
-    @Override
-    public void update(Resume updateResume) {
-        String uuid = updateResume.getUuid();
-        int id = indexOf(uuid);
-        if (isInArray(id)) {
-            storage[id].setUuid(uuid);
-        } else System.out.println("Resume "+uuid+" not found");
-
-    }
 
     protected int indexOf(String uuid) {
         int nonExistIndex = -1;
@@ -70,10 +14,11 @@ public class ArrayStorage extends AbstractArrayStorage {
             }
         }
         return nonExistIndex;
-
     }
 
-    protected boolean isInArray(int id) {
-        return id >= 0;
+    @Override
+    void insert(Resume what, int where) {
+        storage[size] = what;
     }
+
 }

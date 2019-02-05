@@ -5,10 +5,6 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-    @Override
-    protected boolean isInArray(int id) {
-        return id >= 0;
-    }
 
     @Override
     protected int indexOf(String uuid) {
@@ -18,27 +14,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void clear() {
-
+    void insert(Resume what, int where) {
+        where = -(where + 1);
+        storage[where] = what;
     }
 
-    @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
-
-    @Override
-    public void update(Resume updateResume) {
-
-    }
 }
