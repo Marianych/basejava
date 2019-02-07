@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -27,8 +30,12 @@ public abstract class AbstractArrayStorage implements Storage {
             if (!isInArray(id)) {
                 insert(r, id);
                 size++;
+            } else {
+                throw new ExistStorageException(r.getUuid());
             }
-        } else System.out.println("Storage overflow");
+        } else {
+            throw new StorageException("Storage overflow", r.getUuid());
+        }
     }
 
     @Override
@@ -36,7 +43,7 @@ public abstract class AbstractArrayStorage implements Storage {
         int id = indexOf(uuid);
         if (isInArray(id))
             return storage[id];
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     @Override
@@ -47,7 +54,7 @@ public abstract class AbstractArrayStorage implements Storage {
             arraycopy(storage, headSize, storage, id, size - headSize);
             size--;
         } else {
-            System.out.println("Resume " + uuid + " not found");
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -56,8 +63,8 @@ public abstract class AbstractArrayStorage implements Storage {
         String uuid = updateResume.getUuid();
         int id = indexOf(uuid);
         if (isInArray(id)) {
-            storage[id].setUuid(uuid);
-        } else System.out.println("Resume " + uuid + " not found");
+            storage[id] = updateResume;
+        } else throw new NotExistStorageException(updateResume.getUuid());
     }
 
     @Override
@@ -76,6 +83,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     abstract int indexOf(String uuid);
 
-    abstract void  insert(Resume what, int where);
+    abstract void insert(Resume what, int where);
 
 }
