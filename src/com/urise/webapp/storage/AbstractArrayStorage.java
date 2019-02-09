@@ -25,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        if (size <= STORAGE_LIMIT) {
+        if (size < STORAGE_LIMIT) {
             int id = indexOf(r.getUuid());
             if (!isInArray(id)) {
                 insert(r, id);
