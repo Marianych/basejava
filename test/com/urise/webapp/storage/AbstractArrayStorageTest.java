@@ -37,7 +37,7 @@ public abstract class AbstractArrayStorageTest {
         storage.save(new Resume());
     }
 
-    @Test (expected = StorageException.class)
+    @Test(expected = StorageException.class)
     public void saveOverflow() {
         String uuid = "";
         storage.clear();

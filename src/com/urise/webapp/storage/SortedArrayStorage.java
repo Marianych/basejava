@@ -18,7 +18,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     void insert(Resume what, int where) {
         where = -(where + 1);
-        arraycopy(storage,where,storage,where+1,size-where);
+        arraycopy(storage, where, storage, where + 1, size - where);
         storage[where] = what;
     }
 
