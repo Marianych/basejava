@@ -10,7 +10,7 @@ import java.util.Arrays;
 import static java.lang.System.arraycopy;
 
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
     private static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -25,17 +25,17 @@ public abstract class AbstractArrayStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        if (size < STORAGE_LIMIT) {
-            int id = indexOf(r.getUuid());
-            if (!isInArray(id)) {
-                insert(r, id);
-                size++;
-            } else {
-                throw new ExistStorageException(r.getUuid());
-            }
-        } else {
+        if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         }
+
+        int id = indexOf(r.getUuid());
+        if (isInArray(id)) {
+            throw new ExistStorageException(r.getUuid());
+        }
+
+        insert(r, id);
+        size++;
     }
 
     @Override
