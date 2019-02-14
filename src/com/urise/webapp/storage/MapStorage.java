@@ -3,23 +3,40 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 public class MapStorage extends AbstractStorage {
-    @Override
-    public void clear() {
-
-    }
+//    Map<Integer,Resume> storage = new
 
     @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public Resume get(String uuid) {
+    Object getSearchKey(String uuid) {
         return null;
     }
 
     @Override
-    public void delete(String uuid) {
+    boolean isExist(Object id) {
+        return false;
+    }
+
+    @Override
+    void doSave(Resume r, Object id) {
+
+    }
+
+    @Override
+    Resume doGet(Object id) {
+        return null;
+    }
+
+    @Override
+    void doDelete(Object id) {
+
+    }
+
+    @Override
+    void doUpdate(Resume r, Object id) {
+
+    }
+
+    @Override
+    public void clear() {
 
     }
 
@@ -31,10 +48,5 @@ public class MapStorage extends AbstractStorage {
     @Override
     public int size() {
         return 0;
-    }
-
-    @Override
-    public void update(Resume updateResume) {
-
     }
 }

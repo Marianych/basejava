@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -12,9 +10,7 @@ import static java.lang.System.arraycopy;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
-    private static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
-
     int size = 0;
 
     @Override
@@ -24,47 +20,30 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void save(Resume r) {
+    public void doSave(Resume r, Object id) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         }
-
-        int id = indexOf(r.getUuid());
-        if (isInArray(id)) {
-            throw new ExistStorageException(r.getUuid());
-        }
-
-        insert(r, id);
+        insert(r, (Integer) id);
         size++;
     }
 
     @Override
-    public Resume get(String uuid) {
-        int id = indexOf(uuid);
-        if (isInArray(id))
-            return storage[id];
-        throw new NotExistStorageException(uuid);
+    Resume doGet(Object id) {
+        return storage[(Integer) id];
     }
 
     @Override
-    public void delete(String uuid) {
-        int id = indexOf(uuid);
-        int headSize = id + 1;
-        if (isInArray(id)) {
-            arraycopy(storage, headSize, storage, id, size - headSize);
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    public void doDelete(Object id) {
+        Integer index = (Integer) id;
+        int headSize = index + 1;
+        arraycopy(storage, headSize, storage, index, size - headSize);
+        size--;
     }
 
     @Override
-    public void update(Resume updateResume) {
-        String uuid = updateResume.getUuid();
-        int id = indexOf(uuid);
-        if (isInArray(id)) {
-            storage[id] = updateResume;
-        } else throw new NotExistStorageException(updateResume.getUuid());
+    public void doUpdate(Resume updateResume, Object id) {
+        storage[(Integer) id] = updateResume;
     }
 
     @Override
@@ -77,11 +56,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    private boolean isInArray(int id) {
-        return id >= 0;
+    @Override
+    boolean isExist(Object id) {
+        return (Integer) id >= 0;
     }
-
-    abstract int indexOf(String uuid);
 
     abstract void insert(Resume what, int where);
 

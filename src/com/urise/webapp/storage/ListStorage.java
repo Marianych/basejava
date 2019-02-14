@@ -2,39 +2,60 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListStorage extends AbstractStorage {
+    private List<Resume> list = new ArrayList<>();
+
     @Override
     public void clear() {
-
+        list.clear();
     }
 
     @Override
-    public void save(Resume r) {
-
+    void doSave(Resume r, Object id) {
+        list.add(r);
     }
 
     @Override
-    public Resume get(String uuid) {
-        return null;
+    Resume doGet(Object id) {
+        return list.get((Integer) id);
     }
 
     @Override
-    public void delete(String uuid) {
+    void doDelete(Object id) {
+        list.remove(((Integer) id).intValue());
+    }
 
+    @Override
+    void doUpdate(Resume r, Object id) {
+        list.set((Integer) id, r);
     }
 
     @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        return list.toArray(new Resume[0]);
     }
 
     @Override
     public int size() {
-        return 0;
+        return list.size();
     }
 
     @Override
-    public void update(Resume updateResume) {
-
+    Integer getSearchKey(String uuid) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return null;
     }
+
+    @Override
+    boolean isExist(Object searchKey) {
+        return searchKey != null;
+    }
+
 }
