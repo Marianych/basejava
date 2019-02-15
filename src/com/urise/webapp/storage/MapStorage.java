@@ -1,33 +1,22 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    private Map<String, Resume> map = new HashMap<>();
+    private final Map<String, Resume> map = new HashMap<>();
 
     @Override
     Object getSearchKey(String uuid) {
-//        Set<String> setCodes = map.keySet();
-////        Iterator<String> iterator = setCodes.iterator();
-////
-////        while (iterator.hasNext()) {
-////            if (map.get(iterator.next()).getUuid().equals(uuid)) {
-////                return iterator.next();
-////            }
-////        }
-//        for (String key:setCodes) {
-//            if (map.get(key).getUuid().equals(uuid)){
-//                return  key;
-//            }
-//        }
         return uuid;
     }
 
     @Override
     boolean isExist(Object searchKey) {
-        return map.containsKey(searchKey);
+        String key = (String) searchKey;
+        return map.containsKey(key);
     }
 
     @Override
@@ -37,12 +26,14 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     Resume doGet(Object id) {
-        return map.get(id);
+        String key = (String) id;
+        return map.get(key);
     }
 
     @Override
     void doDelete(Object id) {
-        map.remove(id);
+        String key = (String) id;
+        map.remove(key);
     }
 
     @Override

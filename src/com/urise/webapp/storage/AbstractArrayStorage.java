@@ -10,7 +10,7 @@ import static java.lang.System.arraycopy;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
-    protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    final Resume[] storage = new Resume[STORAGE_LIMIT];
     int size = 0;
 
     @Override

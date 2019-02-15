@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
  * Interactive test for com.urise.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
-public class MainArray {
+class MainArray {
     private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {

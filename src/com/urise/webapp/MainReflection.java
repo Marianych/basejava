@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class MainReflection {
+class MainReflection {
     public static void main(String[] args) throws IllegalAccessException {
         Resume r = new Resume();
 
@@ -18,9 +18,9 @@ public class MainReflection {
         //TODO invoke r.toString via reflection
         System.out.println(r);
 
-        Method tostring = r.getClass().getDeclaredMethods()[1];
+        Method myToString = r.getClass().getDeclaredMethods()[1];
         try {
-            System.out.println(tostring.invoke(r));
+            System.out.println(myToString.invoke(r));
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
