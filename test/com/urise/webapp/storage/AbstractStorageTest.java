@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
@@ -83,8 +82,8 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        List<Resume> resumes = asList(storage.getAll());
+    public void getAllSorted() {
+        List<Resume> resumes = storage.getAllSorted();
         assertTrue(resumes.contains(R1));
         assertTrue(resumes.contains(R2));
         assertTrue(resumes.contains(R3));
