@@ -4,6 +4,11 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
     static final int STORAGE_LIMIT = 10000;
 
@@ -18,6 +23,19 @@ public abstract class AbstractStorage implements Storage {
     abstract void doDelete(Object id);
 
     abstract void doUpdate(Resume r, Object id);
+
+    abstract List<Resume> doGetAll();
+
+
+
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> all = new ArrayList<>(doGetAll());
+        all.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        return all;
+    }
+
 
     @Override
     public void save(Resume r) {
