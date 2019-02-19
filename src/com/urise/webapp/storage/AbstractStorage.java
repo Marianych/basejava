@@ -5,7 +5,6 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,8 +24,6 @@ public abstract class AbstractStorage implements Storage {
     abstract void doUpdate(Resume r, Object id);
 
     abstract List<Resume> doGetAll();
-
-
 
 
     @Override
