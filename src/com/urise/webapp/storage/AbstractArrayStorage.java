@@ -9,7 +9,8 @@ import java.util.List;
 import static java.lang.System.arraycopy;
 
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
+    private static final int STORAGE_LIMIT = 10000;
 
     final Resume[] storage = new Resume[STORAGE_LIMIT];
     int size = 0;
@@ -21,30 +22,29 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void doSave(Resume r, Object id) {
+    public void doSave(Resume r, Integer id) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         }
-        insert(r, (Integer) id);
+        insert(r, id);
         size++;
     }
 
     @Override
-    Resume doGet(Object id) {
-        return storage[(Integer) id];
+    Resume doGet(Integer id) {
+        return storage[id];
     }
 
     @Override
-    public void doDelete(Object id) {
-        Integer index = (Integer) id;
-        int headSize = index + 1;
-        arraycopy(storage, headSize, storage, index, size - headSize);
+    public void doDelete(Integer id) {
+        int headSize = id + 1;
+        arraycopy(storage, headSize, storage, id, size - headSize);
         size--;
     }
 
     @Override
-    public void doUpdate(Resume updateResume, Object id) {
-        storage[(Integer) id] = updateResume;
+    public void doUpdate(Resume updateResume, Integer id) {
+        storage[id] = updateResume;
     }
 
     @Override
@@ -58,8 +58,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    boolean isExist(Object id) {
-        return (Integer) id >= 0;
+    boolean isExist(Integer id) {
+        return id >= 0;
     }
 
     abstract void insert(Resume what, int where);
