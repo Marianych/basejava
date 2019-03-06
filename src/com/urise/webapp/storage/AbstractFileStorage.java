@@ -3,8 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +21,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
         this.directory = directory;
     }
+
+    abstract void doWrite(Resume r, OutputStream os) throws IOException;
+
+    abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
     File getSearchKey(String uuid) {
@@ -43,18 +46,14 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         doUpdate(r, file);
     }
 
-    abstract void doWrite(Resume r, File file) throws IOException;
-
     @Override
     Resume doGet(File file) {
         try {
-            return doRead(file);
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error on Get", file.getName(), e);
         }
     }
-
-    abstract Resume doRead(File file) throws IOException;
 
     @Override
     void doDelete(File file) {
@@ -66,7 +65,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     void doUpdate(Resume r, File file) {
         try {
-            doWrite(r, file);
+            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error on update", file.getName(), e);
         }
