@@ -9,9 +9,11 @@ public interface Storage {
 
     void save(Resume r);
 
-    Resume get(String uuid);
+    void update(Resume updateResume);
 
     void delete(String uuid);
+
+    Resume get(String uuid);
 
     /**
      * @return array, contains only Resumes in storage (without null)
@@ -20,5 +22,4 @@ public interface Storage {
 
     int size();
 
-    void update(Resume updateResume);
 }

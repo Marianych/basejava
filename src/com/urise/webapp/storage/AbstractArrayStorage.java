@@ -16,9 +16,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     int size = 0;
 
     @Override
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
+    boolean isExist(Integer id) {
+        return id >= 0;
     }
 
     @Override
@@ -31,8 +30,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    Resume doGet(Integer id) {
-        return storage[id];
+    public void doUpdate(Resume updateResume, Integer id) {
+        storage[id] = updateResume;
     }
 
     @Override
@@ -43,8 +42,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public void doUpdate(Resume updateResume, Integer id) {
-        storage[id] = updateResume;
+    Resume doGet(Integer id) {
+        return storage[id];
     }
 
     @Override
@@ -52,16 +51,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
+    abstract void insert(Resume what, int where);
+
+    @Override
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+    }
+
     @Override
     public int size() {
         return size;
     }
-
-    @Override
-    boolean isExist(Integer id) {
-        return id >= 0;
-    }
-
-    abstract void insert(Resume what, int where);
 
 }

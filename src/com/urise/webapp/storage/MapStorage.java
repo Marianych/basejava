@@ -26,8 +26,8 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    Resume doGet(String id) {
-        return map.get(id);
+    void doUpdate(Resume r, String id) {
+        map.replace(id, r);
     }
 
     @Override
@@ -36,18 +36,18 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    void doUpdate(Resume r, String id) {
-        map.replace(id, r);
-    }
-
-    @Override
-    public void clear() {
-        map.clear();
+    Resume doGet(String id) {
+        return map.get(id);
     }
 
     @Override
     public List<Resume> doGetAll() {
         return new ArrayList<>(map.values());
+    }
+
+    @Override
+    public void clear() {
+        map.clear();
     }
 
     @Override

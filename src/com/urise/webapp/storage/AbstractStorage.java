@@ -19,23 +19,13 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     abstract void doSave(Resume r, SK id);
 
-    abstract Resume doGet(SK id);
+    abstract void doUpdate(Resume r, SK id);
 
     abstract void doDelete(SK id);
 
-    abstract void doUpdate(Resume r, SK id);
+    abstract Resume doGet(SK id);
 
     abstract List<Resume> doGetAll();
-
-
-    @Override
-    public List<Resume> getAllSorted() {
-        LOG.info("getAllSorted ");
-        List<Resume> all = new ArrayList<>(doGetAll());
-        all.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
-        return all;
-    }
-
 
     @Override
     public void save(Resume r) {
@@ -45,10 +35,10 @@ public abstract class AbstractStorage<SK> implements Storage {
     }
 
     @Override
-    public Resume get(String uuid) {
-        LOG.info("get " + uuid);
-        SK id = getExistSearchKey(uuid);
-        return doGet(id);
+    public void update(Resume r) {
+        LOG.info("update " + r);
+        SK id = getExistSearchKey(r.getUuid());
+        doUpdate(r, id);
     }
 
     @Override
@@ -59,10 +49,18 @@ public abstract class AbstractStorage<SK> implements Storage {
     }
 
     @Override
-    public void update(Resume r) {
-        LOG.info("update " + r);
-        SK id = getExistSearchKey(r.getUuid());
-        doUpdate(r, id);
+    public Resume get(String uuid) {
+        LOG.info("get " + uuid);
+        SK id = getExistSearchKey(uuid);
+        return doGet(id);
+    }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted ");
+        List<Resume> all = new ArrayList<>(doGetAll());
+        all.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        return all;
     }
 
     private SK getNotExistSearchKey(String uuid) {

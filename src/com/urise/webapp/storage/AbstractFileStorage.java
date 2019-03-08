@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
+
     private File directory;
 
     public AbstractFileStorage(File directory) {
@@ -47,11 +48,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    Resume doGet(File file) {
+    void doUpdate(Resume r, File file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file)));
+            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("IO error on Get", file.getName(), e);
+            throw new StorageException("IO error on update", file.getName(), e);
         }
     }
 
@@ -63,11 +64,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    void doUpdate(Resume r, File file) {
+    Resume doGet(File file) {
         try {
-            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("IO error on update", file.getName(), e);
+            throw new StorageException("IO error on Get", file.getName(), e);
         }
     }
 

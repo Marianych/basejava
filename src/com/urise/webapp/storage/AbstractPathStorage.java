@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public abstract class AbstractPathStorage extends AbstractStorage<Path> {
@@ -47,11 +46,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    Resume doGet(Path path) {
+    void doUpdate(Resume r, Path path) {
         try {
-            return doRead(Files.newInputStream(path));
+            doWrite(r, Files.newOutputStream(path));
         } catch (IOException e) {
-            throw new StorageException("Path get error", path.toString(), e);
+            throw new StorageException("Path write error", path.toString(), e);
         }
     }
 
@@ -65,11 +64,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    void doUpdate(Resume r, Path path) {
+    Resume doGet(Path path) {
         try {
-            doWrite(r, Files.newOutputStream(path));
+            return doRead(Files.newInputStream(path));
         } catch (IOException e) {
-            throw new StorageException("Path write error", path.toString(), e);
+            throw new StorageException("Path get error", path.toString(), e);
         }
     }
 
