@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 public abstract class AbstractStorageTest {
 
     final Storage storage;
+    static final String FILE_DIR = "D:\\temp";
     private static final String UUID_1 = "uuid1";
     private static final String FULL_NAME_1 = "FULL_NAME_1";
     private static final Resume R1 = new Resume(UUID_1, FULL_NAME_1);
@@ -29,6 +30,7 @@ public abstract class AbstractStorageTest {
 
     @Before
     public void setUp() {
+        storage.clear();
         storage.save(R1);
         storage.save(R2);
         storage.save(R3);
@@ -81,7 +83,7 @@ public abstract class AbstractStorageTest {
     public void update() {
         Resume updateResume = new Resume(UUID_2, FULL_NAME_2);
         storage.update(updateResume);
-        assertSame(storage.get(UUID_2), updateResume);
+        assertEquals(storage.get(UUID_2), updateResume);
     }
 
     @Test
