@@ -33,15 +33,25 @@ public class MainFile {
         printDirectoryDeeply(dir);
     }
 
-    public static void printDirectoryDeeply(File dir) {
-        File[] files = dir.listFiles();
+    private static void insertTabs(int tabsCount) {
+        for (int i = 0; i < tabsCount; i++) {
+            System.out.print("  ");
+        }
+    }
 
+    private static int pathLength = 0;
+
+    private static void printDirectoryDeeply(File dir) {
+        File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println("File: " + file.getParentFile().getName() + ':' + file.getName());
+                    insertTabs(pathLength);
+                    System.out.println("  File: " + file.getName());
                 } else if (file.isDirectory()) {
+                    insertTabs(pathLength);
                     System.out.println("Directory: " + file.getName());
+                    pathLength++;
                     printDirectoryDeeply(file);
                 }
             }
