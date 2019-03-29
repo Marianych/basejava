@@ -30,29 +30,18 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        printDirectoryDeeply(dir);
+        printDirectoryDeeply(dir, "");
     }
 
-    private static void insertTabs(int tabsCount) {
-        for (int i = 0; i < tabsCount; i++) {
-            System.out.print("  ");
-        }
-    }
-
-    private static int pathLength = 0;
-
-    private static void printDirectoryDeeply(File dir) {
+    private static void printDirectoryDeeply(File dir, String offset) {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    insertTabs(pathLength);
-                    System.out.println("  File: " + file.getName());
+                    System.out.println(offset + "File: " + file.getName());
                 } else if (file.isDirectory()) {
-                    insertTabs(pathLength);
-                    System.out.println("Directory: " + file.getName());
-                    pathLength++;
-                    printDirectoryDeeply(file);
+                    System.out.println(offset + "Directory: " + file.getName());
+                    printDirectoryDeeply(file, offset + "  ");
                 }
             }
         }
