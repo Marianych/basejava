@@ -15,9 +15,7 @@ class MainReflection {
         field.setAccessible(true);
         System.out.println(field.get(r));
         field.set(r, "new uuid");
-        //TODO invoke r.toString via reflection
         System.out.println(r);
-
         Method myToString = r.getClass().getDeclaredMethods()[1];
         try {
             System.out.println(myToString.invoke(r));

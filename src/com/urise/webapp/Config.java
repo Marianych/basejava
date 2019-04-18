@@ -8,9 +8,8 @@ import java.util.Properties;
 
 public class Config {
     private static final Config INSTANCE = new Config();
-    protected static final File PROPS = new File("./config/resumes.properties");
-    private Properties props = new Properties();
-    private String storageDir;
+    private static final File PROPS = new File("config\\resumes.properties");
+    private final String storageDir;
 
     public static Config get() {
         return INSTANCE;
@@ -22,6 +21,7 @@ public class Config {
 
     private Config() {
         try (InputStream is = new FileInputStream(PROPS)) {
+            Properties props = new Properties();
             props.load(is);
             storageDir = props.getProperty("storage.dir");
         } catch (IOException e) {

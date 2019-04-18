@@ -9,7 +9,7 @@ public class StorageException extends RuntimeException {
     }
 
     public StorageException(String message, String uuid) {
-        this(message,uuid,null);
+        this(message, uuid, null);
     }
 
     public StorageException(String message, Exception e) {
@@ -18,6 +18,10 @@ public class StorageException extends RuntimeException {
 
     public StorageException(String message) {
         this(message, null, null);
+    }
+
+    public StorageException(Exception e) {
+        this(e.getMessage(), e);
     }
 
     public String getUuid() {
