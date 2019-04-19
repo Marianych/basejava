@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlStorage implements Storage {
-    public final ConnectionFactory connectionFactory;
+    private final ConnectionFactory connectionFactory;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -88,7 +88,6 @@ public class SqlStorage implements Storage {
             while (rs.next()) {
                 resumeList.add(new Resume(rs.getString("uuid"), rs.getString("full_name")));
             }
-            rs.getInt(1);
         } catch (SQLException e) {
             throw new StorageException(e);
         }
