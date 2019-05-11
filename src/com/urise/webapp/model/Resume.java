@@ -51,16 +51,20 @@ public class Resume implements Serializable {
         return sections.get(type);
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public void addContact(ContactType type, String value) {
         contacts.put(type, value);
     }
 
     public void addSection(SectionType type, Section section) {
         sections.put(type, section);
-    }
-
-    public String getFullName() {
-        return fullName;
     }
 
     public Map<ContactType, String> getContacts() {
@@ -91,4 +95,5 @@ public class Resume implements Serializable {
     public int hashCode() {
         return Objects.hash(uuid, fullName, contacts, sections);
     }
+
 }
