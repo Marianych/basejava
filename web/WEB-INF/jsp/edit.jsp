@@ -1,4 +1,5 @@
 <%@ page import="com.urise.webapp.model.ContactType" %>
+<%@ page import="com.urise.webapp.model.SectionType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -22,6 +23,13 @@
             <dl>
                 <dt>${type.title}</dt>
                 <dd><input type="text" name="${type.name()}" size=30 value="${resume.getContact(type)}"></dd>
+            </dl>
+        </c:forEach>
+        <h3>Секции</h3>
+        <c:forEach var="type" items="<%=SectionType.values()%>">
+            <dl>
+                <dt>${type.title}</dt>
+                <dd><input type="text" name="${type.name()}" size=30 value="${resume.getSection(type)}"></dd>
             </dl>
         </c:forEach>
         <hr>

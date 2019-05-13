@@ -51,6 +51,13 @@ public class ResumeServlet extends HttpServlet {
         }
         Resume r;
         switch (action) {
+            case "create":
+                r =  new Resume("Новое резюме");
+                storage.save(r);
+                uuid=r.getUuid();
+                response.sendRedirect("resume?uuid="+uuid+"&action=edit");
+                return;
+
             case "delete":
                 storage.delete(uuid);
                 response.sendRedirect("resume");
