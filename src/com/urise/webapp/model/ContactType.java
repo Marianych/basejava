@@ -1,25 +1,25 @@
 package com.urise.webapp.model;
 
 public enum ContactType {
-    PHONE("тел.:"),
-    MOBILEPHONE("Мобильный номер:"),
-    HOMEPHONE("Домашний номер:"),
-    SKYPE("Skype"){
+    PHONE("тел."),
+    MOBILEPHONE("Мобильный номер"),
+    HOMEPHONE("Домашний номер"),
+    SKYPE("Skype") {
         @Override
         public String toHtml0(String value) {
-            return "<a href='skype:"+ value +"'>"+value+"</a>";
+            return "<a href='skype:" + value + "'>" + value + "</a>";
         }
     },
-    EMAIL("Электронная почта:"){
+    EMAIL("Электронная почта") {
         @Override
         public String toHtml0(String value) {
-            return "<a href='mailto:"+value+"'>"+value+"</a>";
+            return "<a href='mailto:" + value + "'>" + value + "</a>";
         }
     },
-    LINKEDIN("Профиль LinkedIn:"),
-    GITHUB("Профиль GitHub:"),
-    STACKOVERFLOW("Профиль StackOverflow:"),
-    HOMEPAGE("Домашняя страница:");
+    LINKEDIN("Профиль LinkedIn"),
+    GITHUB("Профиль GitHub"),
+    STACKOVERFLOW("Профиль StackOverflow"),
+    HOMEPAGE("Домашняя страница");
 
     private String title;
 
@@ -36,6 +36,6 @@ public enum ContactType {
     }
 
     public String toHtml(String value) {
-        return (value==null)?"":toHtml0(value);
+        return (value == null) ? "" : toHtml0(value);
     }
 }

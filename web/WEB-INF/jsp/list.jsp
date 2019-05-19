@@ -10,7 +10,7 @@
 <body>
 <jsp:include page="fragments/header.jsp"/>
 <section>
-    <a href="resume?uuid=${resume.uuid}&action=create">Создать резюме</a>
+    <a href="resume?uuid=${resume.uuid}&action=create"><img src="img/add.png"></a>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Имя</th>
